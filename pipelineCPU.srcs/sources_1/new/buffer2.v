@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module buffer2(
+module buffer2(                 // 指令执行部件
     input clk,
     input rst,
     
@@ -26,8 +26,10 @@ module buffer2(
     reg reg_we, dm_we;
     reg sel_rs_sa, sel_imm_rt, sel_alu_dm;
     reg [3: 0] alu_ctrl;
-    reg [31: 0] imm_ext, rs_data, rt_data, num1, num2;
+    reg [31: 0] imm_ext, rs_data, rt_data;
     reg [4: 0] reg_wa;
+    
+    wire [31: 0] num1, num2;
     
     always @(posedge clk or negedge rst) begin
         if(!rst) begin

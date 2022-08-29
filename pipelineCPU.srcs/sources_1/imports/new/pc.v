@@ -10,6 +10,7 @@ module pc(
     input pc_br,                // brUnit输出的branch信号
     input [25: 0] pc_tgt,       // instruction[25: 0]
     input [15: 0] pc_off,       // instruction[15: 0]
+    input [31: 0] sel_4_0,      // 选择+4或+0
     
     output [31: 0] pc_nxt       // 下一条指令的pc值
     );

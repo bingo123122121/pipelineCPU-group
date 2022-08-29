@@ -6,165 +6,142 @@ module cpu(
     input rst
     );
     
-    // pc
-    wire pc_jmp;
-    wire pc_br;
-    wire [25: 0] pc_tgt;
-    wire [15: 0] pc_off;
-    wire [31: 0] pc_nxt;
-    
-    pc pc(
-        .clk(clk),
-        .rst(rst),
-        
-        .pc_jmp(pc_jmp),
-        .pc_br(pc_br),
-        .pc_tgt(pc_tgt),
-        .pc_off(pc_off),
-        
-        .pc_nxt(pc_nxt)
-    );
-    
-    // insMem
-    wire [31: 0] inst;
-    insMem insMem(
-        .clk(clk),
-        .rst(rst),
-        
-        ._addr(pc_nxt),
-        
-        .idata(inst)
-    );
-    
-    // ctrl
-    wire sel_rt_rd, sel_rs_sa, sel_imm_rt, sel_alu_dm;
-    wire [3: 0] alu_ctrl;
-    wire reg_we, dm_we;
+    // 取指部件
     wire [1: 0] br_we;
+    wire [31: 0] rs_data;
+    wire [31: 0] rt_data;
+    wire [3: 0] pc4;
+    wire [31: 0] inst;
+    wire [31: 0] sel_4_0;
     
-    ctrl ctrl(
-        .opcode(inst[31: 26]),
-        .func(inst[5: 0]),
-        
-        .sel_rt_rd(sel_rt_rd),
-        .sel_rs_sa(sel_rs_sa),
-        .sel_imm_rt(sel_imm_rt), 
-        .sel_alu_dm(sel_alu_dm), 
-        .alu_ctrl(alu_ctrl),
-        
-        .reg_we(reg_we),
-        .dm_we(dm_we),
-        .br_we(br_we)
-    );
+    wire [31: 0] inst_val;
+    wire [31: 0] pc_val;
     
-    // signExt
-    wire [31: 0] imm_ext;
-    
-    signExt signExt(
-        .imm(inst[15: 0]),
-        
-        .imm_ext(imm_ext)
-    );
-    
-    // brUnit
-    wire [31: 0] rs_data, rt_data;
-    
-    brUnit brUnit(
+    buffer0 buffer0(
         .clk(clk),
         .rst(rst),
         
+        ._br_we(br_we),
+        ._rs_data(rs_data),
+        ._rt_data(rt_data),
+        ._pc4(pc4),
+        ._inst(inst),
+        ._sel_4_0(sel_4_0),
+    
+        .inst_val(inst_val),
+        .pc_val(pc_val)
+    );
+    
+    // 译码部件
+    wire reg_we4;                        // 上一条指令的写寄存器信号
+    wire [31: 0] reg_wd;
+    wire [4: 0] reg_wa4;                 // 上一条指令的写寄存器地址
+    
+    wire reg_we1;                        // 下一条指令的写寄存器信号
+    wire dm_we1;
+    wire sel_rs_sa;
+    wire sel_imm_rt;
+    wire sel_alu_dm;
+    wire [3: 0] alu_ctrl;
+    wire [31: 0] imm_ext;
+    wire [4: 0] reg_wa1;               // 下一条指令的写寄存器地址
+    
+    buffer1 buffer1(
+        .clk(clk),
+        .rst(rst),
+        
+        ._inst(inst_val),
+        ._pc_val(pc_val),
+        ._reg_we(reg_we4),
+        ._reg_wd(reg_wd),
+        ._reg_wa(reg_wa4),
+        
+        .reg_we_nxt(reg_we1),
+        .dm_we(dm_we1),
+        .br_we(br_we),
+        .sel_rs_sa(sel_rs_sa),
+        .sel_imm_rt(sel_imm_rt),
+        .sel_alu_dm(sel_alu_dm),
+        .alu_ctrl(alu_ctrl),
+        .imm_ext(imm_ext),
         .rs_data(rs_data),
         .rt_data(rt_data),
-        .inst(inst),
-        .pc4(pc_nxt[31: 28]),
-        .br_we(br_we),
-        
-        .pc_jmp(pc_jmp),
-        .pc_br(pc_br),
-        .pc_tgt(pc_tgt),
-        .pc_off(pc_off)
+        .reg_wa_nxt(reg_wa1),
+        .inst_nxt(inst),
+        .sel_4_0(sel_4_0),
+        .pc4(pc4)
     );
     
-    // regFile
-    wire [4: 0] wb_addr;
-    wire [31: 0] wb_data;
+    // 运算部件
+    wire reg_we2;
+    wire dm_we2;
+    wire sel_alu_dm2;
+    wire [31: 0] alu_ans2;
+    wire [31: 0] rt_data2;
+    wire [4: 0] reg_wa2;
     
-    regFile regFile(
+    buffer2 buffer2(
         .clk(clk),
         .rst(rst),
         
-        .reg_we(reg_we),
-        .rs_addr(inst[25: 21]),
-        .rt_addr(inst[20: 16]),
-        .wb_addr(wb_addr),
-        .wb_data(wb_data),
+        ._reg_we(reg_we1),
+        ._dm_we(dm_we1),
+        ._sel_rs_sa(sel_rs_sa),
+        ._sel_imm_rt(sel_imm_rt),
+        ._sel_alu_dm(sel_alu_dm),
+        ._alu_ctrl(alu_ctrl),
+        ._imm_ext(imm_ext),
+        ._rs_data(rs_data),
+        ._rt_data(rt_data),
+        ._reg_wa(reg_wa1),
         
-        .rs_data(rs_data),
-        .rt_data(rt_data)
+        .reg_we_(reg_we2),
+        .dm_we_(dm_we2),
+        .sel_alu_dm_(sel_alu_dm2),
+        .alu_ans(alu_ans2),
+        .rt_data_(rt_data2),
+        .reg_wa_(reg_wa2)
     );
     
-    // alu
-    wire [31: 0] num1, num2, ans;
-    
-    alu alu(
-        .clk(clk),
-        .rst(rst),
-        
-        .alu_ctrl(alu_ctrl),
-        .num1(num1),
-        .num2(num2),
-        
-        .ans(ans)
-    );
-    
-    // dataMem
+    // 取数部件
+    wire reg_we3;
+    wire sel_alu_dm3;
     wire [31: 0] dm_data;
+    wire [31: 0] alu_ans3;
+    wire [4: 0] reg_wa3;
     
-    dataMem dataMem(
+    buffer3 buffer3(
         .clk(clk),
         .rst(rst),
         
-        .we(dm_we),
-        ._addr(ans),
-        .wdata(rt_data),
+        ._reg_we(reg_we2),
+        ._dm_we(dm_we2),
+        ._sel_alu_dm(sel_alu_dm2),
+        ._alu_ans(alu_ans2),
+        ._rt_data(rt_data2),
+        ._reg_wa(reg_wa2),
         
-        .rdata(dm_data)
+        .reg_we_(reg_we3),
+        .sel_alu_dm_(sel_alu_dm3),
+        .dm_data(dm_data),
+        .alu_ans_(alu_ans3),
+        .reg_wa_(reg_wa3)
     );
     
-    // mux_rt_rd
-    mux5 mux_rt_rd(
-        .in1(inst[20: 16]),
-        .in2(inst[15: 11]),
-        .sel(sel_rt_rd),
+    // 写回部件
+    buffer4 buffer4(
+        .clk(clk),
+        .rst(rst),
         
-        .out(wb_addr)
+        ._reg_we(reg_we3),
+        ._sel_alu_dm(sel_alu_dm3),
+        ._dm_data(dm_data),
+        ._alu_ans(alu_ans3),
+        ._reg_wa(reg_wa3),
+        
+        .reg_we_(reg_we4),
+        .reg_wd(reg_wd),
+        .reg_wa_(reg_wa4)
     );
-    
-    // mux_rs_sa
-    mux32 mux_rs_sa(
-        .in1(rs_data),
-        .in2(imm_ext),
-        .sel(sel_rs_sa),
-        
-        .out(num1)
-    );
-    
-    // mux_imm_rt
-    mux32 mux_imm_rt(
-        .in1(imm_ext),
-        .in2(rt_data),
-        .sel(sel_imm_rt),
-        
-        .out(num2)
-    );
-    
-    // mux_alu_dm
-    mux32 mux_alu_dm(
-        .in1(ans),
-        .in2(dm_data),
-        .sel(sel_alu_dm),
-        
-        .out(wb_data)
-    ); 
     
 endmodule
