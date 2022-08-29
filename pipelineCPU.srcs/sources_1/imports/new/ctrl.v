@@ -38,10 +38,13 @@ module ctrl(
                       (func == 6'b000010) ? 17 :                // srl
                       18) : 18;                                 // 未定义指令
     
+    // 选择信号0选前者，1选后者
     assign sel_rt_rd = (ins_type >= 9 && ins_type <= 17) ? 1 : 0;
     assign sel_rs_sa = (ins_type == 16 || ins_type == 17) ? 1 : 0;
     assign sel_imm_rt = (ins_type >= 9 && ins_type <= 17) ? 1 : 0;
     assign sel_alu_dm = (ins_type == 5) ? 1 : 0;
+    
+    // 将指令对应到需要的运算，具体对应关系看excel表
     assign alu_ctrl = (ins_type == 0 || ins_type == 5 || ins_type == 6 || ins_type == 9) ? 4'h0 :   // +
                       (ins_type == 10) ? 4'h1 :                     // -
                       (ins_type == 1 || ins_type == 11) ? 4'h2 :    // &

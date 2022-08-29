@@ -6,6 +6,6 @@ module signExt(
     output [31: 0] imm_ext
     );
     
-    assign imm_ext = {{16{imm[15]}}, imm[15: 0]};
+    assign imm_ext = {{16{imm[15]}}, imm[15: 0]};           // ´ø·ûºÅÀ©Õ¹
     
 endmodule

@@ -1,5 +1,6 @@
 `timescale 1ns / 1ps
 
+// cpu就是按照电路图连线，组合各个组件的过程
 module cpu(
     input clk,
     input rst

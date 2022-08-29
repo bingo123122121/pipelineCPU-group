@@ -4,17 +4,13 @@ module alu(
     input clk,
     input rst,
     
-    input [3: 0] alu_ctrl,          // 0-add/addiu，1-xor，2-lui
+    input [3: 0] alu_ctrl,              // 0-9对应10种运算
     
-    input [31: 0] num1,
-    input [31: 0] num2,
+    input [31: 0] num1,                 // 输入数据1
+    input [31: 0] num2,                 // 输入数据2
     
-    output [31: 0] ans
+    output [31: 0] ans                  // 运算结果
     );
-    
-    wire [31: 0] add_ans = num1 + num2;
-    wire [31: 0] xor_ans = num1 ^ num2;
-    wire [31: 0] lui_ans = {num2[15: 0], 16'b0};
     
     assign ans = (alu_ctrl == 0) ? num1 + num2 :
                  (alu_ctrl == 1) ? num1 - num2 :

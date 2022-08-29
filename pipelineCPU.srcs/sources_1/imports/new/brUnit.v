@@ -4,10 +4,10 @@ module brUnit(
     input clk,
     input rst,
 
-    input [31: 0] rs_data,
-    input [31: 0] rt_data,
-    input [31: 0] inst,
-    input [3: 0] pc4,
+    input [31: 0] rs_data,          // rs寄存器值
+    input [31: 0] rt_data,          // rt寄存器值
+    input [31: 0] inst,             // 当前指令
+    input [3: 0] pc4,               // pc高4位
     input [1: 0] br_we,             // 01-beq, 10-j
     
     output pc_jmp,

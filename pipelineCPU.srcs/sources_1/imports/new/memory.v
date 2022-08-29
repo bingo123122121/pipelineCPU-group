@@ -4,22 +4,22 @@ module insMem(
     input clk,
     input rst,
     
-    input [31: 0] _addr,        // 仅用低8位
+    input [31: 0] _addr,        // 读取的指令地址，仅用低8位
     
-    output [31: 0] idata
+    output [31: 0] idata        // 读出的指令
     );
     
-    reg [7: 0] imem[255: 0];
+    reg [7: 0] imem[255: 0];    // 指令存储器
     integer i;
 
     
-    initial begin
+    initial begin               // 仅可用于仿真
         $readmemh("C:/Users/bu123/Desktop/1.mem", imem);
 
     end
     
     wire [7: 0] addr = _addr[7: 0];
-    assign idata = {imem[addr+3], imem[addr+2], imem[addr+1], imem[addr]};
+    assign idata = {imem[addr+3], imem[addr+2], imem[addr+1], imem[addr]};          // 小端方案读出
     
     
     
@@ -28,18 +28,18 @@ endmodule
 module dataMem(
     input clk,
     input rst,
-    input we,
+    input we,                   // 写使能
     
-    input [31: 0] _addr,        // 仅用低8位
-    input [31: 0] wdata,    
+    input [31: 0] _addr,        // 读取的数据地址，仅用低8位
+    input [31: 0] wdata,        // 待写数据
     
-    output [31: 0] rdata
+    output [31: 0] rdata        // 读出数据
     );
     
-    reg [7: 0] dmem[255: 0];
+    reg [7: 0] dmem[255: 0];    // 数据存储器
     
     integer i;
-    initial begin
+    initial begin               // 仅可用于仿真
         for(i=0; i<256; i = i + 1) dmem[i] = 8'b0;
     end
     
