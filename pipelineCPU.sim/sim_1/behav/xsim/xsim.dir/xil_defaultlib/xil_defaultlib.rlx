@@ -1,0 +1,15 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sim_1/imports/new/testbench.v,1661425087,verilog,,,,testbench,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/alu.v,1661700647,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/brUnit.v,,alu,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/brUnit.v,1661430743,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/cpu.v,,brUnit,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/cpu.v,1661701250,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/ctrl.v,,cpu,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/ctrl.v,1661703362,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/memory.v,,ctrl,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/memory.v,1661416092,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/mux.v,,dataMem;insMem,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/mux.v,1661242867,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/pc.v,,mux32;mux5,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/pc.v,1661429685,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/regFile.v,,pc,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/regFile.v,1661330773,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/signExt.v,,regFile,,,,,,,,
+D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sources_1/imports/new/signExt.v,1661692597,verilog,,D:/Code/VivadoProject/vivado_projects/pipelineCPU/pipelineCPU.srcs/sim_1/imports/new/testbench.v,,signExt,,,,,,,,
