@@ -4,24 +4,5 @@ Running: D:/Vivado/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 2bfb3ae799
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 6 for port 'in1' [D:/Code/VivadoProject/vivado_projects/pipelineCPU-group/pipelineCPU.srcs/sources_1/imports/new/cpu.v:136]
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 6 for port 'in2' [D:/Code/VivadoProject/vivado_projects/pipelineCPU-group/pipelineCPU.srcs/sources_1/imports/new/cpu.v:137]
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 6 for port 'out' [D:/Code/VivadoProject/vivado_projects/pipelineCPU-group/pipelineCPU.srcs/sources_1/imports/new/cpu.v:140]
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.pc
-Compiling module xil_defaultlib.insMem
-Compiling module xil_defaultlib.ctrl
-Compiling module xil_defaultlib.signExt
-Compiling module xil_defaultlib.brUnit
-Compiling module xil_defaultlib.regFile
-Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.dataMem
-Compiling module xil_defaultlib.mux5
-Compiling module xil_defaultlib.mux32
-Compiling module xil_defaultlib.cpu
-Compiling module xil_defaultlib.testbench
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

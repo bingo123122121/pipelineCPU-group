@@ -57,7 +57,7 @@ module ctrl(
                       (ins_type == 17) ? 4'h9 :                     // srl
                       4'ha;
     assign reg_we = (ins_type <= 5 || ins_type >= 9) ? 1 : 0;
-    assign dm_we = (ins_type >= 6 && ins_type <= 8) ? 1 : 0;
+    assign dm_we = (ins_type == 6) ? 1 : 0;
     assign br_we = (ins_type == 7) ? 2'b01 :
                    (ins_type == 8) ? 2'b10 : 0;
     
