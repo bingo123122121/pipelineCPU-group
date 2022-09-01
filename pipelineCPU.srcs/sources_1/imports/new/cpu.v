@@ -10,12 +10,14 @@ module cpu(
     wire [1: 0] br_we;
     wire [31: 0] rs_data;
     wire [31: 0] rt_data;
-    wire [3: 0] pc4;
-    wire [31: 0] inst;
-    wire [31: 0] sel_4_0;
+//    wire [3: 0] pc4;
+    wire [25: 0] inst_addr;
+//    wire [31: 0] sel_4_0;
+    wire pause;
+    wire drop;
     
     wire [31: 0] inst_val;
-    wire [31: 0] pc_val;
+//    wire [31: 0] pc_val;
     
     buffer0 buffer0(
         .clk(clk),
@@ -24,17 +26,18 @@ module cpu(
         ._br_we(br_we),
         ._rs_data(rs_data),
         ._rt_data(rt_data),
-        ._pc4(pc4),
-        ._inst(inst),
-        ._sel_4_0(sel_4_0),
+//        ._pc4(pc4),
+        ._inst_addr(inst_addr),
+//        ._sel_4_0(sel_4_0),
+        .pause(pause),
     
-        .inst_val(inst_val),
-        .pc_val(pc_val)
+        .inst_val(inst_val)
+//        .pc_val(pc_val)
     );
     
     // 译码部件
     wire reg_we4;                        // 上一条指令的写寄存器信号
-    wire [31: 0] reg_wd;
+    wire [31: 0] reg_wd;                 // 上一条指令要写的数据
     wire [4: 0] reg_wa4;                 // 上一条指令的写寄存器地址
     
     wire reg_we1;                        // 下一条指令的写寄存器信号
@@ -51,10 +54,12 @@ module cpu(
         .rst(rst),
         
         ._inst(inst_val),
-        ._pc_val(pc_val),
+//        ._pc_val(pc_val),
         ._reg_we(reg_we4),
         ._reg_wd(reg_wd),
         ._reg_wa(reg_wa4),
+        ._pause(pause),
+        ._drop(drop),
         
         .reg_we_nxt(reg_we1),
         .dm_we(dm_we1),
@@ -67,9 +72,11 @@ module cpu(
         .rs_data(rs_data),
         .rt_data(rt_data),
         .reg_wa_nxt(reg_wa1),
-        .inst_nxt(inst),
-        .sel_4_0(sel_4_0),
-        .pc4(pc4)
+        .inst_addr(inst_addr),
+        .pause(pause),
+        .drop(drop)
+//        .sel_4_0(sel_4_0),
+//        .pc4(pc4)
     );
     
     // 运算部件
@@ -94,6 +101,7 @@ module cpu(
         ._rs_data(rs_data),
         ._rt_data(rt_data),
         ._reg_wa(reg_wa1),
+        .pause(pause),
         
         .reg_we_(reg_we2),
         .dm_we_(dm_we2),

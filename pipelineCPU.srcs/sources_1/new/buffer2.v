@@ -14,6 +14,7 @@ module buffer2(                 // 指令执行部件
     input [31: 0] _rs_data,
     input [31: 0] _rt_data,
     input [4: 0] _reg_wa,
+    input pause,
     
     output reg_we_,
     output dm_we_,
@@ -43,6 +44,18 @@ module buffer2(                 // 指令执行部件
             rs_data <= 32'b0;
             rt_data <= 32'b0;
             reg_wa <= 5'b0;
+        end
+        else if (pause == 1) begin
+            reg_we <= 1'b0;
+            dm_we <= 1'b0;
+            sel_rs_sa <= 1'b0;
+            sel_imm_rt <= 1'b0;
+            sel_alu_dm <= 1'b0;
+            alu_ctrl <= 4'b0;
+            imm_ext <= 32'b0;
+            rs_data <= 32'b0;
+            rt_data <= 32'b0;
+            reg_wa <= 5'b0;           
         end
         else begin
             reg_we <= _reg_we;
