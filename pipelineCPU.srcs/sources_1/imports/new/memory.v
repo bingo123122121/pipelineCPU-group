@@ -14,8 +14,7 @@ module insMem(
 
     
     initial begin               // 仅可用于仿真
-        $readmemh("C:/Users/bu123/Desktop/1.mem", imem);
-
+        $readmemh("C:/Users/Dune/Desktop/xiaoxueqi/pipelineCPU-group/test/shangban.mem", imem);
     end
     
     wire [7: 0] addr = _addr[7: 0];

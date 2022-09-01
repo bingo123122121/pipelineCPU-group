@@ -71,6 +71,8 @@ module buffer1(                             // 译码部件
         .inst(inst),
 //        .inst_last(inst_last),
         .wb_addr(wb_addr), // 当前指令的写回地址
+        .rs_data(rs_data),
+        .rt_data(rt_data),
 //        .rs_addr(), // rs寄存器地址
 //        .rt_addr(),
 //        .pc(pc_val),

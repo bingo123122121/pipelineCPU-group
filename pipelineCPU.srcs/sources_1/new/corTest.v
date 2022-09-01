@@ -7,12 +7,14 @@ module corTest(
     input [31:0] inst, //当前传入的指令
 //    input [4:0] ins_type, // 指令编号
     input [4:0] wb_addr, // 当前指令的写回地址
+    input [31:0] rs_data,
+    input [31:0] rt_data,
 //    input [4:0] rs_addr, // rs寄存器地址
 //    input [4:0] rt_addr, // rt寄存器地址
 //    input [31: 0] pc, // 当前传入的pc值
  
-     output pause, //停止信号   
-     output drop
+    output pause, //停止信号   
+    output drop
 //    output [3: 0] pc4, //pc高4位
 //    output [31: 0] sel_4_0, // 选择下一次pc移动数值，4/0
     );
@@ -59,7 +61,7 @@ module corTest(
                     ( ((addr_buff1 == rs_addr || addr_buff2 == rs_addr || addr_buff3 == rs_addr) && rs_addr != 0) ? 1 : 
                      ( ((addr_buff1 == rt_addr || addr_buff2 == rt_addr || addr_buff3 == rt_addr) && rt_addr != 0) ? 1 : 0 )) : 0;//读rs和rt
     //如果是跳转指令，则冲刷流水线
-    assign drop =  (opcode == 6'b000010) ? 1 : 0; 
+    assign drop = ( opcode == 6'b000010 || (opcode == 6'b000100 && (rs_data == rt_data)) ) ? 1 : 0;
     
 //    assign sel_4_0 = pause ? 32'h4 : 32'h0;
 //    assign pc4 = pc[31: 28];

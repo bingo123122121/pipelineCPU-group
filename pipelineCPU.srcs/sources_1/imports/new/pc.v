@@ -24,7 +24,7 @@ module pc(
     always @(posedge clk or negedge rst) begin
         if (!rst) pc_reg <= 32'hbfc00000;
         else if(pc_jmp) pc_reg <= {pc_ds[31:28], pc_tgt[25:0], 2'b00};      // pc = pc高4位 拼接 pc_tgt<<2
-        else if(pc_br) pc_reg <= pc_ds + (pc_off << 2);                     // pc = pc_off<<2 + pc + 4
+        else if(pc_br) pc_reg <= pc_ds - 32'h8 + (pc_off << 2);                     // pc = pc_off<<2 + pc + 4，但是由于流水延迟已经取出下一条指令，故pc需要回退回跳转指令位置
         else pc_reg <= pc_ds;                                               // pc = pc + 4
     end
     
