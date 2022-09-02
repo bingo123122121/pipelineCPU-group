@@ -11,7 +11,8 @@ module regFile(
     input [31: 0] wb_data,          // 待写入数据
     
     output [31: 0] rs_data,         // rs寄存器值
-    output [31: 0] rt_data          // rt寄存器值
+    output [31: 0] rt_data,          // rt寄存器值
+    output [31: 0] output_data // reg指定位置的数据（上板时显示）
     );
     
     reg [31: 0] gpr[31: 0];         // 寄存器堆
@@ -24,6 +25,9 @@ module regFile(
         end
         else if(reg_we) gpr[wb_addr] <= wb_data;
     end
+    
+    wire [31:0] addr0 = 32'h8;
+    assign output_data = gpr[addr0];
     
     assign rs_data = gpr[rs_addr];
     assign rt_data = gpr[rt_addr];
