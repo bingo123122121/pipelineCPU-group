@@ -3,7 +3,9 @@
 // cpu就是按照电路图连线，组合各个组件的过程
 module cpu(
     input clk,
-    input rst
+    input rst,
+    
+    output [31:0] output_data
     );
     
     // 取指部件
@@ -74,7 +76,8 @@ module cpu(
         .reg_wa_nxt(reg_wa1),
         .inst_addr(inst_addr),
         .pause(pause),
-        .drop(drop)
+        .drop(drop),
+        .output_data(output_data)
 //        .sel_4_0(sel_4_0),
 //        .pc4(pc4)
     );

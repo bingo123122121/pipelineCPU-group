@@ -18,7 +18,7 @@ module brUnit(
     );
 
     assign pc_br = (rs_data == rt_data && br_we == 2'b01) ? 1 : 0;
-    assign pc_jmp = (rs_data == rt_data && br_we == 2'b10) ? 1 : 0;
+    assign pc_jmp = (br_we == 2'b10) ? 1 : 0;
     assign pc_off = inst_addr[15: 0];
     assign pc_tgt = inst_addr;
     

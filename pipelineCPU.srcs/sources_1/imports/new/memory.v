@@ -45,6 +45,7 @@ module dataMem(
     wire [7: 0] addr = _addr[7: 0];
     assign rdata = {dmem[addr+3], dmem[addr+2], dmem[addr+1], dmem[addr]};
     
+    
     always @(posedge clk) begin
         if (we) begin
             dmem[addr] <= wdata[7: 0];

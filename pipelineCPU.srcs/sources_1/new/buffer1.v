@@ -25,7 +25,8 @@ module buffer1(                             // 译码部件
     output [4: 0] reg_wa_nxt,               // 下一条指令的写寄存器地址
     output [25: 0] inst_addr, //分支地址
     output pause,
-    output drop
+    output drop,
+    output [31: 0] output_data
     
 //    output [31: 0] sel_4_0,
 //    output [3: 0] pc4
@@ -120,7 +121,8 @@ module buffer1(                             // 译码部件
         .wb_data(reg_wd),
         
         .rs_data(rs_data),
-        .rt_data(rt_data)
+        .rt_data(rt_data),
+        .output_data(output_data)
     );
     
     // mux_rt_rd
